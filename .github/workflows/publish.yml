@@ -1,0 +1,39 @@
+name: Publish Package to npmjs
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          run_install: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache-dependency-path: pnpm-lock.yaml
+          cache: 'pnpm'
+
+      # Install dependencies with pnpm
+      - name: Install dependencies
+        run: pnpm install
+
+      # Authenticate with npm using the NPM_TOKEN secret
+      - name: Authenticate to npm
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+
+      # Check the version and publish the package
+      - name: Publish package
+        run: pnpm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

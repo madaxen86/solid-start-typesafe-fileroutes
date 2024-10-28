@@ -1,0 +1,9 @@
+node_modules
+dist
+gitignore
+
+# tsup
+tsup.config.bundled_*.{m,c,}s
+
+dev/public/*.xml
+
