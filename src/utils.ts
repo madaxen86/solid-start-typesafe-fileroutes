@@ -1,7 +1,6 @@
 import { App } from 'vinxi';
 import { BaseFileSystemRouter } from 'vinxi/dist/types/lib/fs-router';
 import { ResolvedConfig } from 'vite';
-import { routeRootPath } from './plugin';
 
 type VinxiFileRoute = { path: string; page: boolean; filePath: string };
 
@@ -44,7 +43,7 @@ export function cleanPath(path: string) {
   );
 }
 
-export const isValidFile = (path: string) =>
+export const isValidFile = (path: string, routeRootPath: string) =>
   path.includes(routeRootPath) &&
   !path.endsWith('RouteManifest/index.js') &&
   !path.endsWith('RouteManifest/index.d.ts') &&

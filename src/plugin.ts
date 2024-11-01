@@ -1,9 +1,8 @@
-import type { Plugin } from 'vinxi';
-import type { SolidStartInlineConfig } from '@solidjs/start/config';
-import { generateRouteManifest } from './routeManifest';
-import path, { resolve } from 'path';
 import chokidar from 'chokidar';
-import { cleanPath, getRoutes, isValidFile } from './utils';
+import path from 'path';
+import type { Plugin } from 'vinxi';
+import { generateRouteManifest } from './routeManifest';
+import { isValidFile } from './utils';
 
 interface PluginProps {
   routeDir: string;
@@ -20,7 +19,7 @@ export default function RouteManifestPlugin({ routeDir = 'src/routes' }: PluginP
       }
     },
     async handleHotUpdate({ file }) {
-      if (!isValidFile(file)) return;
+      if (!isValidFile(file, routeDir)) return;
 
       await generateRouteManifest();
     },
@@ -37,14 +36,14 @@ export default function RouteManifestPlugin({ routeDir = 'src/routes' }: PluginP
 
       // Handle file creation
       watcher.on('add', async filePath => {
-        if (!isValidFile(filePath)) return;
+        if (!isValidFile(filePath, routeDir)) return;
         console.log(`File created: ${filePath}`);
         await generateRouteManifest();
       });
 
       // Handle file deletion
       watcher.on('unlink', async filePath => {
-        if (!isValidFile(filePath)) return;
+        if (!isValidFile(filePath, routeDir)) return;
         console.log(`File deleted: ${filePath}`);
         await generateRouteManifest();
       });
