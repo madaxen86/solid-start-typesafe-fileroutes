@@ -28,8 +28,7 @@ export async function getRoutes(config?: ResolvedConfig): Promise<string[]> {
         (route.page || route.path.startsWith('/api')) &&
         !isLayout(route.path, route.filePath, fileroutes),
     )
-    .map(({ path }) => cleanPath(path))
-    .sort((a, b) => (a.length < b.length ? 1 : -1));
+    .map(({ path }) => cleanPath(path));
 
   return filteredRoutes;
 }

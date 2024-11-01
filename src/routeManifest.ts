@@ -58,14 +58,16 @@ function buildRoutesFromTree(tree: Tree, parentPath = '', depth = 2) {
 
   for (const key in tree) {
     const node = tree[key];
+    //raw key "-" to camleCase
+    const objectKey = key.replace(/-(\w)/gi, g => (g.length > 1 ? g[1]?.toUpperCase() + '' : ''));
     if (!node) throw new Error('Node not found');
     if (node.type === 'static') {
       const fullPath = `${parentPath}/${key}`; // Construct full path by appending the parent path
 
       // Traverse children for nested static routes
       if (Object.keys(node.children).length > 0) {
-        outputJS.push(`${indent}${key}: {`);
-        outputDTS.push(`${indent}${key}: {`);
+        outputJS.push(`${indent}${objectKey}: {`);
+        outputDTS.push(`${indent}${objectKey}: {`);
 
         // Static route, if it's an index route
         if (node.index) {
@@ -81,8 +83,8 @@ function buildRoutesFromTree(tree: Tree, parentPath = '', depth = 2) {
         outputDTS.push(`${indent}};`);
       } else {
         // dynamic tail
-        outputJS.push(`${indent}${key}: {index: \`${fullPath}\${query}\`},`);
-        outputDTS.push(`${indent}${key}: {index: string};`);
+        outputJS.push(`${indent}${objectKey}: {index: \`${fullPath}\${query}\`},`);
+        outputDTS.push(`${indent}${objectKey}: {index: string};`);
       }
     }
 
@@ -92,8 +94,8 @@ function buildRoutesFromTree(tree: Tree, parentPath = '', depth = 2) {
 
       // Traverse children for nested dynamic routes
       if (Object.keys(node.children).length > 0) {
-        outputJS.push(`${indent}${key}: (${key}) => ({`);
-        outputDTS.push(`${indent}${key}: (${key}:string|number) => ({`);
+        outputJS.push(`${indent}${objectKey}: (${objectKey}) => ({`);
+        outputDTS.push(`${indent}${objectKey}: (${objectKey}:string|number) => ({`);
 
         if (node.index) {
           outputJS.push(`${indent}  index: \`${fullPath}\${query}\`,`);
@@ -108,8 +110,10 @@ function buildRoutesFromTree(tree: Tree, parentPath = '', depth = 2) {
         outputDTS.push(`${indent}});`);
       } else {
         // dynamic tail
-        outputJS.push(`${indent}${key}: (${key}) => ({index: \`${fullPath}\${query}\`}),`);
-        outputDTS.push(`${indent}${key}: (${key}:string|number) => ({index: string});`);
+        outputJS.push(
+          `${indent}${objectKey}: (${objectKey}) => ({index: \`${fullPath}\${query}\`}),`,
+        );
+        outputDTS.push(`${indent}${objectKey}: (${objectKey}:string|number) => ({index: string});`);
       }
     }
   }
