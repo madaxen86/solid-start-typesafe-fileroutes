@@ -79,6 +79,10 @@ function buildRoutesFromTree(tree: Tree, parentPath = '', depth = 2) {
 
         outputJS.push(`${indent}},`);
         outputDTS.push(`${indent}};`);
+      } else {
+        // dynamic tail
+        outputJS.push(`${indent}${key}: {index: \`${fullPath}\${query}\`},`);
+        outputDTS.push(`${indent}${key}: {index: string};`);
       }
     }
 

@@ -10,16 +10,23 @@ export declare function Routes(searchParams?:Record<string, string>):{
         });
       });
       third: (third:string|number) => ({
+        edit: {index: string};
       });
     };
     posts: {
      index: string;
       ooo: {
         slug: (slug:string|number) => ({index: string});
+        p: {index: string};
       };
+      z: {index: string};
     };
     auth: {
+      abc: {index: string};
     };
     api: {
+      test: {index: string};
     };
+    about: {index: string};
+    _404: {index: string};
 };

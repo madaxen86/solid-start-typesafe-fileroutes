@@ -12,17 +12,24 @@ export function Routes(searchParams) {
         }),
       }),
       third: (third) => ({
+        edit: {index: `/multiple/${third}/edit${query}`},
       }),
     },
     posts: {
      index: `/posts${query}`,
       ooo: {
         slug: (slug) => ({index: `/posts/ooo/${slug}${query}`}),
+        p: {index: `/posts/ooo/p${query}`},
       },
+      z: {index: `/posts/z${query}`},
     },
     auth: {
+      abc: {index: `/auth/abc${query}`},
     },
     api: {
+      test: {index: `/api/test${query}`},
     },
+    about: {index: `/about${query}`},
+    _404: {index: `/_404${query}`},
   };
 }
