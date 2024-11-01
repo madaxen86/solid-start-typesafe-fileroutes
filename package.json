@@ -1,6 +1,6 @@
 {
   "name": "solid-start-typesafe-routes-plugin",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Type-safe routes for solid-start file-routes",
   "license": "MIT",
   "author": "madaxen86",

@@ -61,16 +61,17 @@ function buildRoutesFromTree(tree: Tree, parentPath = '', depth = 2) {
     if (!node) throw new Error('Node not found');
     if (node.type === 'static') {
       const fullPath = `${parentPath}/${key}`; // Construct full path by appending the parent path
-      // Static route, if it's an index route
-      if (node.index) {
-        outputJS.push(`${indent}${key}: { index: \`${fullPath}\${query}\` },`);
-        outputDTS.push(`${indent}${key}: { index: string };`);
-      }
 
       // Traverse children for nested static routes
       if (Object.keys(node.children).length > 0) {
         outputJS.push(`${indent}${key}: {`);
         outputDTS.push(`${indent}${key}: {`);
+
+        // Static route, if it's an index route
+        if (node.index) {
+          outputJS.push(`${indent} index: \`${fullPath}\${query}\`,`);
+          outputDTS.push(`${indent} index: string;`);
+        }
 
         const [contentJS, contentDTS] = buildRoutesFromTree(node.children, fullPath, depth + 1);
         if (contentJS) outputJS.push(contentJS);
@@ -145,8 +146,6 @@ async function generateRoutesFunction(customRoutes: string[]) {
 
   outputJS.push('  };');
   outputJS.push('}');
-  // outputJS.push('');
-  // outputJS.push('module.exports = { Routes };');
 
   outputDTS.push('};');
 

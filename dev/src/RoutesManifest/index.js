@@ -5,30 +5,24 @@ export function Routes(searchParams) {
   const query = searchParams ? '?' + new URLSearchParams(searchParams).toString() : '';
   return {
     index: `/${query}` ,
-    _404: { index: `/_404${query}` },
-    about: { index: `/about${query}` },
-    api: {
-      test: { index: `/api/test${query}` },
-    },
-    auth: {
-      abc: { index: `/auth/abc${query}` },
-    },
-    posts: {
-      z: { index: `/posts/z${query}` },
-      ooo: {
-        slug: (slug) => ({index: `/posts/ooo/${slug}${query}`}),
-        p: { index: `/posts/ooo/p${query}` },
-      },
-    },
     multiple: {
-      third: (third) => ({
-        edit: { index: `/multiple/${third}/edit${query}` },
-      }),
       first: (first) => ({
         second: (second) => ({
           third: (third) => ({index: `/multiple/${first}/${second}/${third}${query}`}),
         }),
       }),
+      third: (third) => ({
+      }),
+    },
+    posts: {
+     index: `/posts${query}`,
+      ooo: {
+        slug: (slug) => ({index: `/posts/ooo/${slug}${query}`}),
+      },
+    },
+    auth: {
+    },
+    api: {
     },
   };
 }

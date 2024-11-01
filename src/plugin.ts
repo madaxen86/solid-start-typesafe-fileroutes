@@ -17,7 +17,7 @@ export default function RouteManifestPlugin(
     name: 'vite-plugin-route-manifest',
     enforce: 'post',
     async configResolved(config) {
-      if (config.router.name === 'client') {
+      if (config.router.name === 'ssr') {
         // TODO: get routeDir from config and set routeRootPath
         await generateRouteManifest(targetDir);
       }
