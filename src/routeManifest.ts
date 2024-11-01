@@ -1,6 +1,5 @@
 import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import path, { resolve } from 'path';
 import { getRoutes } from './utils';
 type TreeNode = {
   type: 'static' | 'param';
@@ -10,16 +9,10 @@ type TreeNode = {
 
 type Tree = Record<string, TreeNode>;
 
-const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
-const __dirname = path.dirname(__filename); // get the name of the directory
-
-const targertDir = 'src/RouteManifest';
-
 // Ensure the .route directory exists
-function ensureRouteDirectory() {
-  const dir = path.join(__dirname, targertDir);
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir);
+function ensureRouteDirectory(targertDir: string) {
+  if (!fs.existsSync(targertDir)) {
+    fs.mkdirSync(targertDir);
   }
 }
 
@@ -123,7 +116,6 @@ function buildRoutesFromTree(tree: Tree, parentPath = '', depth = 2) {
 async function generateRoutesFunction(customRoutes: string[]) {
   const fileRoutes = await getRoutes();
   const routes = [...fileRoutes, ...customRoutes];
-  console.log('routes', routes);
   const tree = buildRouteTree(routes); // Build the tree from routes
 
   const outputJS = [];
@@ -162,9 +154,9 @@ async function generateRoutesFunction(customRoutes: string[]) {
 }
 
 // Function to write the JS file
-async function generateJSFile(routes: string[]) {
-  const jsFilePath = path.join(__dirname, targertDir, 'index.js');
-  const dtsFilePath = path.join(__dirname, targertDir, 'index.d.ts');
+async function generateJSFile(outDir: string, routes: string[]) {
+  const jsFilePath = path.join(outDir, 'index.js');
+  const dtsFilePath = path.join(outDir, 'index.d.ts');
 
   const [routesFunctionString, typeDeclarationString] = await generateRoutesFunction(routes);
 
@@ -174,14 +166,12 @@ async function generateJSFile(routes: string[]) {
   if (!typeDeclarationString)
     throw new Error('Could not create type declaration for Routes function');
   fs.writeFileSync(dtsFilePath, typeDeclarationString, 'utf-8');
-
-  console.log(`Generated ${jsFilePath}`);
 }
 
 // Main function to generate the route manifest
-async function generateRouteManifest(routes: string[] = []) {
-  ensureRouteDirectory();
-  await generateJSFile(routes);
+async function generateRouteManifest(outDir: string, routes: string[] = []) {
+  ensureRouteDirectory(outDir);
+  await generateJSFile(outDir, routes);
 }
 
 export { generateRouteManifest, generateRoutesFunction };

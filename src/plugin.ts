@@ -6,22 +6,26 @@ import { isValidFile } from './utils';
 
 interface PluginProps {
   routeDir: string;
+  outDir: string;
 }
 
-export default function RouteManifestPlugin({ routeDir = 'src/routes' }: PluginProps): Plugin {
+export default function RouteManifestPlugin(
+  { routeDir, outDir }: PluginProps = { routeDir: 'src/routes', outDir: './src/RoutesManifest' },
+): Plugin {
+  const targetDir = path.resolve(outDir);
   return {
     name: 'vite-plugin-route-manifest',
     enforce: 'post',
     async configResolved(config) {
       if (config.router.name === 'client') {
         // TODO: get routeDir from config and set routeRootPath
-        await generateRouteManifest();
+        await generateRouteManifest(targetDir);
       }
     },
     async handleHotUpdate({ file }) {
       if (!isValidFile(file, routeDir)) return;
 
-      await generateRouteManifest();
+      await generateRouteManifest(targetDir);
     },
     async configureServer(server) {
       // Define the path to watch
@@ -37,15 +41,13 @@ export default function RouteManifestPlugin({ routeDir = 'src/routes' }: PluginP
       // Handle file creation
       watcher.on('add', async filePath => {
         if (!isValidFile(filePath, routeDir)) return;
-        console.log(`File created: ${filePath}`);
-        await generateRouteManifest();
+        await generateRouteManifest(targetDir);
       });
 
       // Handle file deletion
       watcher.on('unlink', async filePath => {
         if (!isValidFile(filePath, routeDir)) return;
-        console.log(`File deleted: ${filePath}`);
-        await generateRouteManifest();
+        await generateRouteManifest(targetDir);
       });
 
       server.httpServer?.on('close', () => {

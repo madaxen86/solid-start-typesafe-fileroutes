@@ -21,7 +21,6 @@ export async function getRoutes(config?: ResolvedConfig): Promise<string[]> {
   const fileroutes = (await router.getRoutes()) as VinxiFileRoute[];
 
   if (!fileroutes) throw new Error('Could not get router from vinxi app');
-  console.log('fileroutes', fileroutes);
 
   const filteredRoutes = fileroutes
     .filter(
@@ -50,8 +49,6 @@ export const isValidFile = (path: string, routeRootPath: string) =>
   path.match(/\.[tj]sx?$/gi);
 
 export function isLayout(route: string, filePath: string, allRoutes: VinxiFileRoute[]): boolean {
-  const check = allRoutes.some(r => r.path.startsWith(route + '/') && r.filePath !== filePath);
-  console.log('check', check, route, filePath);
   // Check if any route in allRoutes starts with route + "/"
-  return check;
+  return allRoutes.some(r => r.path.startsWith(route + '/') && r.filePath !== filePath);
 }

@@ -1,17 +1,17 @@
 {
   "name": "solid-start-typesafe-routes-plugin",
-  "version": "0.1.1",
-  "description": "Solid-start Sitemap generator",
+  "version": "0.1.2",
+  "description": "Type-safe routes for solid-start file-routes",
   "license": "MIT",
   "author": "madaxen86",
   "contributors": [],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/madaxen86/solid-start-sitemap.git"
+    "url": "git+https://github.com/madaxen86/solid-start-typesafe-routes-plugin.git"
   },
-  "homepage": "https://github.com/madaxen86/solid-start-sitemap#readme",
+  "homepage": "https://github.com/madaxen86/solid-start-typesafe-routes-plugin#readme",
   "bugs": {
-    "url": "https://github.com/madaxen86/solid-start-sitemap/issues"
+    "url": "https://github.com/madaxen86/solid-start-typesafe-routes-plugin/issues"
   },
   "files": [
     "dist"
