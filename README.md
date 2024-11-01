@@ -1,5 +1,5 @@
 <p>
-  <img width='100%' src='https://assets.solidjs.com/banner?type=solid-start-sitemap&background=tiles&project=%20' alt='solid-start-typesafe-routes-plugin'>
+  <img width='100%' src='https://assets.solidjs.com/banner?type=solid-start-typesafe-routes-plugin&background=tiles&project=%20' alt='solid-start-typesafe-routes-plugin'>
 </p>
 
 # solid-start-typesafe-routes-plugin
