@@ -1,12 +1,13 @@
 import { defineConfig } from '@solidjs/start/config';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import RouteManifestPlugin from './src/TSFileRouterPlugin';
+
 import Plugin from '../src/plugin';
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename); // get the name of the directory
 
 const app = defineConfig({
+  ssr: false,
   vite: {
     resolve: {
       alias: {
@@ -14,30 +15,13 @@ const app = defineConfig({
         '@plugin': path.resolve(__dirname, '../src/plugin'),
       },
     },
-    plugins: [
-      RouteManifestPlugin(),
-      Plugin({
-        hostname: 'http://localhost:3000',
-        replaceRouteParams: {
-          ':slug': ['solid', 'solid-start', 'hello'],
-          ':first': ['a', 'b', 'c'],
-          ':second': ['1', '2', '3'],
-          ':third': ['x', 'y'],
-        },
-        limit: 5000,
-      }),
-    ],
-    optimizeDeps: {
-      include: ['unenv'],
-    },
-  },
-  server: {
-    experimental: {
-      openAPI: true,
-    },
-    alias: {
-      consola: 'consola',
-    },
+    optimizeDeps: {},
+    plugins: [Plugin()],
+    // build: {
+    //   rollupOptions: {
+    //     external: ['RouteManifest'],
+    //   },
+    // },
   },
 });
 

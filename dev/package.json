@@ -9,8 +9,6 @@
   "dependencies": {
     "@solidjs/router": "^0.14.7",
     "@solidjs/start": "^1.0.8",
-    "@tanstack/router-cli": "^1.74.2",
-    "@tanstack/router-vite-plugin": "^1.76.4",
     "autoprefixer": "^10.4.19",
     "consola": "^3.2.3",
     "postcss": "^8.4.38",

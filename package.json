@@ -1,5 +1,5 @@
 {
-  "name": "solid-start-sitemap",
+  "name": "solid-start-typesafe-routes-plugin",
   "version": "0.1.0",
   "description": "Solid-start Sitemap generator",
   "license": "MIT",
@@ -33,9 +33,7 @@
   "scripts": {
     "dev": "vite serve dev",
     "build": "tsup",
-    "test": "concurrently pnpm:test:*",
-    "test:client": "vitest",
-    "test:ssr": "pnpm run test:client --mode ssr",
+    "test": "vitest",
     "prepublishOnly": "pnpm build",
     "format": "prettier --ignore-path .gitignore -w \"src/**/*.{js,ts,json,css,tsx,jsx}\" \"dev/**/*.{js,ts,json,css,tsx,jsx}\"",
     "lint": "concurrently pnpm:lint:*",
@@ -47,14 +45,13 @@
     "solid-js": "^1.6.0",
     "vinxi": "^0.4.3"
   },
-  "dependencies": {
-    "sitemap": "^8.0.0"
-  },
   "devDependencies": {
     "@changesets/cli": "^2.27.9",
+    "@solidjs/start": "^1.0.9",
     "@types/node": "^22.7.5",
     "@typescript-eslint/eslint-plugin": "^8.8.1",
     "@typescript-eslint/parser": "^8.8.1",
+    "chokidar": "^4.0.1",
     "concurrently": "^9.0.1",
     "esbuild": "^0.24.0",
     "eslint": "^9.12.0",

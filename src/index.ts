@@ -1,9 +1,4 @@
-import { getRoutes } from './getRoutes';
-import SolidStartSiteMapPlugin from './plugin';
-import { createSitemap } from './sitemap';
+import SolidStartTypesafeRouterPlugin from './plugin';
+import { generateRouteManifest } from './routeManifest';
 
-/**
- * Gets all the file routes
- * currently no option to get the routes defined through the routers 'Route' component
- */
-export { getRoutes, SolidStartSiteMapPlugin, createSitemap };
+export { SolidStartTypesafeRouterPlugin, generateRouteManifest };

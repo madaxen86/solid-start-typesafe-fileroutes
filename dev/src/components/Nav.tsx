@@ -1,5 +1,5 @@
 import { useLocation } from '@solidjs/router';
-import { Routes } from '~/routeManifest';
+import { Routes } from '~/RouteManifest';
 
 export default function Nav() {
   const location = useLocation();
@@ -16,7 +16,7 @@ export default function Nav() {
           <a href="/about">About</a>
         </li>
         <li class={`border-b-2 ${active('/about')} mx-1.5 sm:mx-6`}>
-          <a href={Routes.auth.index}>About</a>
+          <a href={Routes().multiple.first('a').second('b').third('c').index}>About</a>
         </li>
       </ul>
     </nav>

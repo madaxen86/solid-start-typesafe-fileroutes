@@ -7,3 +7,4 @@ tsup.config.bundled_*.{m,c,}s
 
 dev/public/*.xml
 
+.routes

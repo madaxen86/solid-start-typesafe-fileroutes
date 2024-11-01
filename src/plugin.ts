@@ -1,41 +1,57 @@
-import { Plugin } from 'vinxi';
-import { createSitemap, Options } from './sitemap';
+import type { Plugin } from 'vinxi';
+import type { SolidStartInlineConfig } from '@solidjs/start/config';
+import { generateRouteManifest } from './routeManifest';
+import path, { resolve } from 'path';
+import chokidar from 'chokidar';
+import { cleanPath, getRoutes, isValidFile } from './utils';
 
-/**
- * SolidStart plugin to generate a static sitemap during build.
- *
- * @param {Options} options - Options to pass to `createSitemap`.
- * @returns {Plugin} A plugin instance.
- *
- * @example
- * import { defineConfig } from '@solidjs/start/config';
- * import SolidStartSiteMapPlugin from 'solid-start-sitemap';
- *
- * export default defineConfig({
- *   vite: {
- *     plugins: [
- *      SolidStartSiteMapPlugin({
- *       hostname: 'https://example.com',
- *       replaceRouteParams: {
- *         ':postId': [1, 2, 3],
- *       },
- *       limit: 5000,
- *     }),
- *     ],
- *   },
- * });
- */
-export default function SolidStartSiteMapPlugin(options: Options): Plugin {
+interface PluginProps {
+  routeDir: string;
+}
+
+export default function RouteManifestPlugin({ routeDir = 'src/routes' }: PluginProps): Plugin {
   return {
-    name: 'solid-start-sitemap',
-    apply: 'build',
+    name: 'vite-plugin-route-manifest',
     enforce: 'post',
     async configResolved(config) {
-      // create sitemap only once - client router will always be build
       if (config.router.name === 'client') {
-        console.log('pubdir', config.publicDir);
-        await createSitemap({ ...options, pubDir: config.publicDir || 'public' });
+        // TODO: get routeDir from config and set routeRootPath
+        await generateRouteManifest();
       }
     },
-  } as Plugin;
+    async handleHotUpdate({ file }) {
+      if (!isValidFile(file)) return;
+
+      await generateRouteManifest();
+    },
+    async configureServer(server) {
+      // Define the path to watch
+      const directoryPath = path.resolve(routeDir);
+
+      // Initialize chokidar watcher
+      const watcher = chokidar.watch(directoryPath, {
+        persistent: true,
+        ignoreInitial: true, // Ignore existing files when initializing watcher
+        awaitWriteFinish: true,
+      });
+
+      // Handle file creation
+      watcher.on('add', async filePath => {
+        if (!isValidFile(filePath)) return;
+        console.log(`File created: ${filePath}`);
+        await generateRouteManifest();
+      });
+
+      // Handle file deletion
+      watcher.on('unlink', async filePath => {
+        if (!isValidFile(filePath)) return;
+        console.log(`File deleted: ${filePath}`);
+        await generateRouteManifest();
+      });
+
+      server.httpServer?.on('close', () => {
+        watcher.close();
+      });
+    },
+  };
 }
