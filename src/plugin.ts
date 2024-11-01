@@ -10,7 +10,7 @@ interface PluginProps {
 }
 
 export default function RouteManifestPlugin(
-  { routeDir, outDir }: PluginProps = { routeDir: 'src/routes', outDir: './src/RoutesManifest' },
+  { routeDir, outDir }: PluginProps = { routeDir: 'src/routes', outDir: './src/RouteManifest' },
 ): Plugin {
   const targetDir = path.resolve(outDir);
   return {
