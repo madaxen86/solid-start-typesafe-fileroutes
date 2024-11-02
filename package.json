@@ -7,11 +7,11 @@
   "contributors": [],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/madaxen86/solid-start-typesafe-routes-plugin.git"
+    "url": "git+https://github.com/madaxen86/solid-start-typesafe-fileroutes.git"
   },
-  "homepage": "https://github.com/madaxen86/solid-start-typesafe-routes-plugin#readme",
+  "homepage": "https://github.com/madaxen86/solid-start-typesafe-routes#readme",
   "bugs": {
-    "url": "https://github.com/madaxen86/solid-start-typesafe-routes-plugin/issues"
+    "url": "https://github.com/madaxen86/solid-start-typesafe-routes/issues"
   },
   "files": [
     "dist"
