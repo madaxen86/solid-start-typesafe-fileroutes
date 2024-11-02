@@ -11,15 +11,15 @@ This plugin for solid-start will create a route manifest which provides type-saf
 ## Installation
 
 ```bash
-npm i solid-start-typesafe-routes-plugin
+npm i --save-dev solid-start-typesafe-routes-plugin
 ```
 
 ```bash
-yarn add solid-start-typesafe-routes-plugin
+yarn add -D solid-start-typesafe-routes-plugin
 ```
 
 ```bash
-pnpm add solid-start-typesafe-routes-plugin
+pnpm add -D solid-start-typesafe-routes-plugin
 ```
 
 ## Usage
