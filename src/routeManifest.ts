@@ -2,7 +2,7 @@ import fs from 'fs';
 import path, { resolve } from 'path';
 import { getRoutes } from './utils';
 type TreeNode = {
-  type: 'static' | 'param';
+  type: 'static' | 'param' | 'optional';
   index?: boolean;
   children: Record<string, TreeNode>;
 };
@@ -28,14 +28,15 @@ function buildRouteTree(routes: string[]) {
       // Prefeix numbers with _ =>
       segment = segment.replace(/^\:?\*?([0-9]+)$/g, '_$1');
       const isParam = segment.startsWith(':');
+      const isOptional = segment.endsWith('?');
       const isLastPart = index === segments.length - 1;
 
       // Determine the key: parameterized routes or static segments
-      const key = isParam ? segment.slice(1) : segment;
-
+      let key = isParam ? segment.slice(1) : segment;
+      key = isOptional ? key.slice(0, -1) : key;
       if (!currentNode[key]) {
         currentNode[key] = isParam
-          ? { type: 'param', children: {} }
+          ? { type: isOptional ? 'optional' : 'param', children: {} }
           : { type: 'static', children: {} };
       }
 
@@ -71,8 +72,8 @@ function buildRoutesFromTree(tree: Tree, parentPath = '', depth = 2) {
 
         // Static route, if it's an index route
         if (node.index) {
-          outputJS.push(`${indent} index: \`${fullPath}\${query}\`,`);
-          outputDTS.push(`${indent} index: string;`);
+          outputJS.push(`${indent}  index: \`${fullPath}\${query}\`,`);
+          outputDTS.push(`${indent}  index: string;`);
         }
 
         const [contentJS, contentDTS] = buildRoutesFromTree(node.children, fullPath, depth + 1);
@@ -88,14 +89,22 @@ function buildRoutesFromTree(tree: Tree, parentPath = '', depth = 2) {
       }
     }
 
-    if (node.type === 'param') {
-      const fullPath = `${parentPath}/\${${key}\}`; // Construct full path by appending the parent path
+    if (node.type === 'param' || node.type === 'optional') {
+      // Construct full path by appending the parent path
+      const fullPath =
+        node.type === 'param'
+          ? `${parentPath}/\${${key}\}`
+          : `${parentPath}\${${key} ? \`/\${${key}\}\` : ''}`;
       // Dynamic route parameter
 
       // Traverse children for nested dynamic routes
       if (Object.keys(node.children).length > 0) {
         outputJS.push(`${indent}${objectKey}: (${objectKey}) => ({`);
-        outputDTS.push(`${indent}${objectKey}: (${objectKey}:string|number) => ({`);
+        outputDTS.push(
+          `${indent}${objectKey}: (${objectKey}${
+            node.type === 'optional' ? '?' : ''
+          }:string|number) => ({`,
+        );
 
         if (node.index) {
           outputJS.push(`${indent}  index: \`${fullPath}\${query}\`,`);
@@ -177,8 +186,17 @@ async function generateJSFile(outDir: string, routes: string[]) {
 
 // Main function to generate the route manifest
 async function generateRouteManifest(outDir: string, routes: string[] = []) {
+  console.log('###############', 'generating', '###############');
   ensureRouteDirectory(outDir);
   await generateJSFile(outDir, routes);
 }
 
-export { generateRouteManifest, generateRoutesFunction };
+let timer: NodeJS.Timeout;
+async function debouncedGenerateRouteManifest(outDir: string, routes: string[] = []) {
+  if (timer) clearTimeout(timer);
+  timer = setTimeout(() => {
+    generateRouteManifest(outDir, routes);
+  }, 1000);
+}
+
+export { generateRouteManifest, generateRoutesFunction, debouncedGenerateRouteManifest };

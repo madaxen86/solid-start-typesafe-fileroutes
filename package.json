@@ -1,7 +1,7 @@
 {
   "name": "solid-start-typesafe-routes-plugin",
-  "version": "0.1.7",
-  "description": "Type-safe routes for solid-start file-routes",
+  "version": "0.2.0",
+  "description": "Type-safe routes for solid-start file-routes. No more broken links. ",
   "license": "MIT",
   "author": "madaxen86",
   "contributors": [],
@@ -9,9 +9,9 @@
     "type": "git",
     "url": "git+https://github.com/madaxen86/solid-start-typesafe-fileroutes.git"
   },
-  "homepage": "https://github.com/madaxen86/solid-start-typesafe-routes#readme",
+  "homepage": "https://github.com/madaxen86/solid-start-typesafe-fileroutes",
   "bugs": {
-    "url": "https://github.com/madaxen86/solid-start-typesafe-routes/issues"
+    "url": "https://github.com/madaxen86/solid-start-typesafe-fileroutes/issues"
   },
   "files": [
     "dist"
@@ -39,7 +39,8 @@
     "lint": "concurrently pnpm:lint:*",
     "lint:code": "eslint --ignore-path .gitignore --max-warnings 0 ssrc/**/*.{js,ts,tsx,jsx}",
     "lint:types": "tsc --noEmit",
-    "update-deps": "pnpm up -Li"
+    "update-deps": "pnpm up -Li",
+    "publish": "pnpm changeset version && pnpm publish"
   },
   "peerDependencies": {
     "solid-js": "^1.6.0",

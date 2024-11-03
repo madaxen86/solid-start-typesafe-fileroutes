@@ -2,7 +2,7 @@ import { App } from 'vinxi';
 import { BaseFileSystemRouter } from 'vinxi/dist/types/lib/fs-router';
 import { ResolvedConfig } from 'vite';
 
-type VinxiFileRoute = { path: string; page: boolean; filePath: string };
+export type VinxiFileRoute = { path: string; page: boolean; filePath: string };
 
 let router: BaseFileSystemRouter | undefined;
 

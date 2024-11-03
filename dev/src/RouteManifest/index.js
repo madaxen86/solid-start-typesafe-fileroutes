@@ -15,11 +15,17 @@ export function Routes(searchParams) {
       abc: {index: `/auth/abc${query}`},
     },
     posts: {
-     index: `/posts${query}`,
+      index: `/posts${query}`,
+      slug: (slug) => ({index: `/posts/${slug}${query}`}),
+      t: {index: `/posts/t${query}`},
       z: {index: `/posts/z${query}`},
       ooo: {
-        slug: (slug) => ({index: `/posts/ooo/${slug}${query}`}),
+        index: `/posts/ooo${query}`,
         p: {index: `/posts/ooo/p${query}`},
+        optional: (optional) => ({
+          index: `/posts/ooo${optional ? `/${optional}` : ''}${query}`,
+          test: {index: `/posts/ooo${optional ? `/${optional}` : ''}/test${query}`},
+        }),
       },
     },
     multiple: {

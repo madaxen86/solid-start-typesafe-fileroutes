@@ -7,6 +7,7 @@
 [![pnpm](https://img.shields.io/badge/maintained%20with-pnpm-cc00ff.svg?style=for-the-badge&logo=pnpm)](https://pnpm.io/)
 
 This plugin for solid-start will create a route manifest which provides type-safe routes based on the file-routing.
+As solid-start itself this plugin is also router agnostic. So it'll work with any router which is able to include solid-start's `FileRoutes` component.
 
 ## Installation
 
@@ -28,11 +29,13 @@ pnpm add -D solid-start-typesafe-routes-plugin
 
 ```ts
 interface PluginProps {
-  routeDir: string; //default: 'src/routes'
+  routeDir: string; //default: 'src/routes' - path to the file routes root
+  outDir: string; // default: './src/RouteManifest' - path where the output files are written to
 }
 ```
 
 ```ts
+//app.config.ts
 import { SolidStartTypesafeRouterPlugin } from 'solid-start-typesafe-routes-plugin';
 defineConfig({
   vite: {
@@ -90,4 +93,19 @@ Routes().auth.userId('xyz').index; // => '/auth/xyz'
 
 // Pass searchparams to routes
 Routes({ q: 'apples' }).index; // => '/?q=apples'
+```
+
+So use it like
+
+```tsx
+<a href={Routes().posts.slug('hello-world').index}> ... </a>
+
+<Link href={Routes().posts.slug('hello-world').index} isActive={Routes().posts.slug('hello-world').index === location.pathname}>...</Link>
+
+// -----------------------------------------
+
+import {useNavigate} from '@solidjs/router';
+
+const navigate = useNavigate();
+navigate(Routes({q:"hello"}).posts.index)
 ```

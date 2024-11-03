@@ -13,11 +13,17 @@ export declare function Routes(searchParams?:Record<string, string>):{
       abc: {index: string};
     };
     posts: {
-     index: string;
+      index: string;
+      slug: (slug:string|number) => ({index: string});
+      t: {index: string};
       z: {index: string};
       ooo: {
-        slug: (slug:string|number) => ({index: string});
+        index: string;
         p: {index: string};
+        optional: (optional?:string|number) => ({
+          index: string;
+          test: {index: string};
+        });
       };
     };
     multiple: {
