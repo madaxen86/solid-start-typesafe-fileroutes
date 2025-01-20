@@ -1,5 +1,15 @@
 # solid-start-typesafe-routes-plugin
 
+## 0.3.0
+
+### Minor Changes
+
+- 714f805: added eslint-disable to routesManifest.js file
+
+### Patch Changes
+
+- 714f805: fix: keep catch all routes with numeric key dynamic -> [*404]
+
 ## 0.2.0
 
 ### Minor Changes

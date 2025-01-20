@@ -1,6 +1,6 @@
 {
   "name": "solid-start-typesafe-routes-plugin",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Type-safe routes for solid-start file-routes. No more broken links. ",
   "license": "MIT",
   "author": "madaxen86",
@@ -40,7 +40,8 @@
     "lint:code": "eslint --ignore-path .gitignore --max-warnings 0 ssrc/**/*.{js,ts,tsx,jsx}",
     "lint:types": "tsc --noEmit",
     "update-deps": "pnpm up -Li",
-    "publish": "pnpm changeset version && pnpm publish"
+    "publish": "pnpm publish",
+    "ci:version": "pnpm changeset version"
   },
   "peerDependencies": {
     "solid-js": "^1.6.0",
