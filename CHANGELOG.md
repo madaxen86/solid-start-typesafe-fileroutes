@@ -1,5 +1,11 @@
 # solid-start-typesafe-routes-plugin
 
+## 0.3.1
+
+### Patch Changes
+
+- 2c23010: transform "." to camelCase
+
 ## 0.3.0
 
 ### Minor Changes
