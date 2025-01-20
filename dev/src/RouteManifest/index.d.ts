@@ -3,9 +3,8 @@
 // ################################################
 export declare function Routes(searchParams?:Record<string, string>):{
     index: string;
-    _404: {index: string};
+    _404: (_404:string|number) => ({index: string});
     routeSlash: {index: string};
-    about: {index: string};
     api: {
       test: {index: string};
     };
@@ -36,4 +35,5 @@ export declare function Routes(searchParams?:Record<string, string>):{
         });
       });
     };
+    about: {index: string};
 };

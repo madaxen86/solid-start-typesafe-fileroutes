@@ -7,7 +7,7 @@
 [![pnpm](https://img.shields.io/badge/maintained%20with-pnpm-cc00ff.svg?style=for-the-badge&logo=pnpm)](https://pnpm.io/)
 
 This plugin for solid-start will create a route manifest which provides type-safe routes based on the file-routing.
-As solid-start itself this plugin is also router agnostic. So it'll work with any router which is able to include solid-start's `FileRoutes` component.
+As solid-start itself this plugin is also router agnostic. So it'll work with any router which is able to include solid-start's `Fileroutes` component.
 
 ## Installation
 
@@ -36,10 +36,10 @@ interface PluginProps {
 
 ```ts
 //app.config.ts
-import { SolidStartTypesafeRouterPlugin } from 'solid-start-typesafe-routes-plugin';
+import solidStartTypesafeRouterPlugin from 'solid-start-typesafe-routes-plugin';
 defineConfig({
   vite: {
-    plugins: [SolidStartTypesafeRouterPlugin()],
+    plugins: [solidStartTypesafeRouterPlugin()],
   },
 });
 ```
@@ -79,33 +79,33 @@ src
 You can get the routes like
 
 ```ts
-import { Routes } from '~/RouteManifest';
+import routes from '~/RouteManifest';
 
-Routes().index; // => '/'
-Routes().about.index; // => '/about'
+routes().index; // => '/'
+routes().about.index; // => '/about'
 
-Routes().posts.slug('hello-world').index; // => '/posts/hello-world'
+routes().posts.slug('hello-world').index; // => '/posts/hello-world'
 
-Routes().multiple.first('a').second('b').third('c').index; // => '/multiple/a/b/c'
-Routes().multiple.first('a').second('b').third('c').add.index; // => '/multiple/a/b/c/add'
+routes().multiple.first('a').second('b').third('c').index; // => '/multiple/a/b/c'
+routes().multiple.first('a').second('b').third('c').add.index; // => '/multiple/a/b/c/add'
 
-Routes().auth.userId('xyz').index; // => '/auth/xyz'
+routes().auth.userId('xyz').index; // => '/auth/xyz'
 
 // Pass searchparams to routes
-Routes({ q: 'apples' }).index; // => '/?q=apples'
+routes({ q: 'apples' }).index; // => '/?q=apples'
 ```
 
 So use it like
 
 ```tsx
-<a href={Routes().posts.slug('hello-world').index}> ... </a>
+<a href={routes().posts.slug('hello-world').index}> ... </a>
 
-<Link href={Routes().posts.slug('hello-world').index} isActive={Routes().posts.slug('hello-world').index === location.pathname}>...</Link>
+<Link href={routes().posts.slug('hello-world').index} isActive={routes().posts.slug('hello-world').index === location.pathname}>...</Link>
 
 // -----------------------------------------
 
 import {useNavigate} from '@solidjs/router';
 
 const navigate = useNavigate();
-navigate(Routes({q:"hello"}).posts.index)
+navigate(routes({q:"hello"}).posts.index)
 ```

@@ -5,9 +5,8 @@ export function Routes(searchParams) {
   const query = searchParams ? '?' + new URLSearchParams(searchParams).toString() : '';
   return {
     index: `/${query}` ,
-    _404: {index: `/_404${query}`},
+    _404: (_404) => ({index: `/${_404}${query}`}),
     routeSlash: {index: `/route-slash${query}`},
-    about: {index: `/about${query}`},
     api: {
       test: {index: `/api/test${query}`},
     },
@@ -38,5 +37,6 @@ export function Routes(searchParams) {
         }),
       }),
     },
+    about: {index: `/about${query}`},
   };
 }

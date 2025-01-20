@@ -1,3 +1,3 @@
 export default () => {
-  return '[[optional]]';
+  return <div style={{ height: '150vh' }}>'[[optional]]'</div>;
 };

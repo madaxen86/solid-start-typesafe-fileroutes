@@ -25,7 +25,7 @@ export async function getRoutes(config?: ResolvedConfig): Promise<string[]> {
   const filteredRoutes = fileroutes
     .filter(
       route =>
-        (route.page || route.path.startsWith('/api')) &&
+        // (route.page || route.path.startsWith('/api')) &&
         !isLayout(route.path, route.filePath, fileroutes),
     )
     .map(({ path }) => cleanPath(path));

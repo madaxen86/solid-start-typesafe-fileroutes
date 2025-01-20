@@ -23,6 +23,7 @@ const app = defineConfig({
     //   },
     // },
   },
+  middleware: './middleware.ts',
 });
 
 export default app;
