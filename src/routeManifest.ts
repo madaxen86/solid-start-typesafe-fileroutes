@@ -60,7 +60,9 @@ function buildRoutesFromTree(tree: Tree, parentPath = '', depth = 2) {
   for (const key in tree) {
     const node = tree[key];
     //raw key "-" to camleCase
-    const objectKey = key.replace(/-(\w)/gi, g => (g.length > 1 ? g[1]?.toUpperCase() + '' : ''));
+    const objectKey = key.replace(/[-\.](\w)/gi, g =>
+      g.length > 1 ? g[1]?.toUpperCase() + '' : '',
+    );
     if (!node) throw new Error('Node not found');
     if (node.type === 'static') {
       const fullPath = `${parentPath}/${key}`; // Construct full path by appending the parent path
