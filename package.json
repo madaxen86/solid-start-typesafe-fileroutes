@@ -41,7 +41,7 @@
     "lint:types": "tsc --noEmit",
     "update-deps": "pnpm up -Li",
     "publish": "pnpm publish",
-    "ci:version": "pnpm changeset version"
+    "version": "pnpm changeset version"
   },
   "peerDependencies": {
     "solid-js": "^1.6.0",
