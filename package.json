@@ -40,8 +40,7 @@
     "lint:code": "eslint --ignore-path .gitignore --max-warnings 0 ssrc/**/*.{js,ts,tsx,jsx}",
     "lint:types": "tsc --noEmit",
     "update-deps": "pnpm up -Li",
-    "publish": "pnpm publish",
-    "version": "pnpm changeset version"
+    "publish": "pnpm changeset version && pnpm publish"
   },
   "peerDependencies": {
     "solid-js": "^1.6.0",
