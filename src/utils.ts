@@ -1,3 +1,4 @@
+import { getRequestEvent, isServer } from 'solid-js/web';
 import { App } from 'vinxi';
 import { BaseFileSystemRouter } from 'vinxi/dist/types/lib/fs-router';
 import { ResolvedConfig } from 'vite';
@@ -12,7 +13,7 @@ export async function getRoutes(config?: ResolvedConfig): Promise<string[]> {
       router = config.router.internals.routes;
     } else {
       const app = (globalThis as any).app as App; //app added by vinxi
-      router = app?.getRouter('ssr').internals.routes;
+      router = app?.getRouter?.('ssr').internals.routes;
     }
   }
 
@@ -28,7 +29,8 @@ export async function getRoutes(config?: ResolvedConfig): Promise<string[]> {
         // (route.page || route.path.startsWith('/api')) &&
         !isLayout(route.path, route.filePath, fileroutes),
     )
-    .map(({ path }) => cleanPath(path));
+    .map(({ path }) => cleanPath(path))
+    .sort((a, b) => a.length - b.length);
 
   return filteredRoutes;
 }

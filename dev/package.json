@@ -20,6 +20,7 @@
     "node": ">=18"
   },
   "devDependencies": {
-    "solid-start-typesafe-routes-plugin": "^0.1.7"
+    "solid-start-typesafe-routes-plugin": "^0.1.7",
+    "vite-tsconfig-paths": "^5.1.4"
   }
 }

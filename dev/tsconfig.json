@@ -16,10 +16,11 @@
     "baseUrl": ".", // <--- Add this line
     "paths": {
       // "lib/*": ["../src/*"],
-      "@plugin": ["../src/plugin"],
-      "@src": ["../src"],
+      "@plugin": ["./../src/plugin"],
+      "@src/*": ["../src/*"],
       "~/*": ["./src/*"]
     }
   },
   "exclude": []
+  // "include": ["../tsconfig.json", "../src/**/* .{ts,tsx}"]
 }
