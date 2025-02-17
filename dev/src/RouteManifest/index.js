@@ -7,17 +7,9 @@ export function Routes(searchParams) {
   return {
     index: `/${query}` ,
     _404: (_404) => ({index: `/${_404}${query}`}),
-    routeSlash: {index: `/route-slash${query}`},
     about: {index: `/about${query}`},
-    api: {
-      test: {index: `/api/test${query}`},
-    },
-    auth: {
-      abc: {index: `/auth/abc${query}`},
-    },
     posts: {
       index: `/posts${query}`,
-      slug: (slug) => ({index: `/posts/${slug}${query}`}),
       t: {index: `/posts/t${query}`},
       z: {index: `/posts/z${query}`},
       ooo: {
@@ -28,7 +20,16 @@ export function Routes(searchParams) {
           test: {index: `/posts/ooo${optional ? `/${optional}` : ''}/test${query}`},
         }),
       },
+      slug: (slug) => ({index: `/posts/${slug}${query}`}),
     },
+    api: {
+      test: {index: `/api/test${query}`},
+    },
+    auth: {
+      abc: {index: `/auth/abc${query}`},
+    },
+    routeSlash: {index: `/route-slash${query}`},
+    manifestJson: {index: `/manifest.json${query}`},
     multiple: {
       third: (third) => ({
         edit: {index: `/multiple/${third}/edit${query}`},
@@ -39,6 +40,5 @@ export function Routes(searchParams) {
         }),
       }),
     },
-    manifestJson: {index: `/manifest.json${query}`},
   };
 }

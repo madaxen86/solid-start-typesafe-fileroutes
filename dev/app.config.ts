@@ -1,6 +1,6 @@
 import { defineConfig } from '@solidjs/start/config';
 import tsconfigPaths from 'vite-tsconfig-paths';
-// import Plugin from '@src/plugin';
+import Plugin from '../src/plugin'; //
 // import path from 'path';
 // import { fileURLToPath } from 'url';
 
@@ -16,10 +16,7 @@ const app = defineConfig({
     //     '@plugin': path.resolve(__dirname, '../src/plugin'),
     //   },
     // },
-    plugins: [
-      tsconfigPaths({}),
-      // Plugin()
-    ],
+    plugins: [tsconfigPaths({}), Plugin()],
     // build: {
     //   rollupOptions: {
     //     external: ['RouteManifest'],

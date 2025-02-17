@@ -4,17 +4,9 @@
 export declare function Routes(searchParams?:Record<string, string>):{
     index: string;
     _404: (_404:string|number) => ({index: string});
-    routeSlash: {index: string};
     about: {index: string};
-    api: {
-      test: {index: string};
-    };
-    auth: {
-      abc: {index: string};
-    };
     posts: {
       index: string;
-      slug: (slug:string|number) => ({index: string});
       t: {index: string};
       z: {index: string};
       ooo: {
@@ -25,7 +17,16 @@ export declare function Routes(searchParams?:Record<string, string>):{
           test: {index: string};
         });
       };
+      slug: (slug:string|number) => ({index: string});
     };
+    api: {
+      test: {index: string};
+    };
+    auth: {
+      abc: {index: string};
+    };
+    routeSlash: {index: string};
+    manifestJson: {index: string};
     multiple: {
       third: (third:string|number) => ({
         edit: {index: string};
@@ -36,5 +37,4 @@ export declare function Routes(searchParams?:Record<string, string>):{
         });
       });
     };
-    manifestJson: {index: string};
 };
