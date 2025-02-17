@@ -6,7 +6,7 @@
 
 [![pnpm](https://img.shields.io/badge/maintained%20with-pnpm-cc00ff.svg?style=for-the-badge&logo=pnpm)](https://pnpm.io/)
 
-This plugin for solid-start will create a route manifest which provides type-safe routes based on the file-routing.
+This plugin for solid-start will create a route manifest which provides type-safe routes based on the file-routing. This gives you auto-completion and errors.
 As solid-start itself this plugin is also router agnostic. So it'll work with any router which is able to include solid-start's `Fileroutes` component.
 
 ## Installation
@@ -79,7 +79,7 @@ src
 You can get the routes like
 
 ```ts
-import routes from '~/RouteManifest';
+import { routes } from '~/RouteManifest';
 
 routes().index; // => '/'
 routes().about.index; // => '/about'
@@ -104,8 +104,16 @@ So use it like
 
 // -----------------------------------------
 
-import {useNavigate} from '@solidjs/router';
+import { useNavigate } from '@solidjs/router';
 
 const navigate = useNavigate();
-navigate(routes({q:"hello"}).posts.index)
+navigate(routes({q:"hello"}).posts.index);
+
+// -----------------------------------------
+
+export const login = action(async () => {
+  'use server'
+  //...
+  return redirect(routes().index, { revalidate:getUser.key });
+}, "loginAction")
 ```
