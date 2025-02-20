@@ -1,5 +1,11 @@
 # solid-start-typesafe-routes-plugin
 
+## 1.1.0
+
+### Minor Changes
+
+- updated dependecies to work with solid-start 1.1.x and vinix 0.5.3
+
 ## 0.3.1
 
 ### Patch Changes
