@@ -1,7 +1,8 @@
 import path from 'path';
-import type { Plugin } from 'vinxi';
+
 import { debouncedGenerateRouteManifest, generateRouteManifest } from './routeManifest';
 import { isValidFile } from './utils';
+import { Plugin } from 'vite';
 
 interface PluginProps {
   routeDir: string;
@@ -16,12 +17,14 @@ export default function routeManifestPlugin(
     name: 'vite-plugin-route-manifest',
     enforce: 'post',
     async configResolved(config) {
-      if (!config.app.config.name)
-        throw new Error('`RouteManifestPlugin` requires to be used with solid-start / vinxi');
-
-      if (config.router.name === 'ssr') {
+      //@ts-expect-error - cant type vinxi and vite
+      if (config.router && config.router?.name === 'ssr') {
         //use the ssr router to include API routes
         // TODO: get routeDir from config and set routeRootPath
+        //vinxi
+        await generateRouteManifest(targetDir);
+      } else {
+        //devinxi
         await generateRouteManifest(targetDir);
       }
     },

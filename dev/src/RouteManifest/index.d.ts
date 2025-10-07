@@ -19,9 +19,6 @@ export declare function routes(searchParams?:Record<string, string>):{
       };
       slug: (slug:string|number) => ({index: string});
     };
-    api: {
-      test: {index: string};
-    };
     auth: {
       abc: {index: string};
     };

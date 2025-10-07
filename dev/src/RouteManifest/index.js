@@ -22,9 +22,6 @@ export function routes(searchParams) {
       },
       slug: (slug) => ({index: `/posts/${slug}${query}`}),
     },
-    api: {
-      test: {index: `/api/test${query}`},
-    },
     auth: {
       abc: {index: `/auth/abc${query}`},
     },
