@@ -1,5 +1,11 @@
 # solid-start-typesafe-routes-plugin
 
+## 1.2.0
+
+### Minor Changes
+
+- 78b4b1b: support for devinxi - removed vinxi dependecy
+
 ## 1.1.0
 
 ### Minor Changes
