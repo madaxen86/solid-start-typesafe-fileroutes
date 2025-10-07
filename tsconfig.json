@@ -14,8 +14,7 @@
     "forceConsistentCasingInFileNames": true,
     "noUncheckedIndexedAccess": true,
     "jsx": "preserve",
-    "jsxImportSource": "solid-js",
-    "types": ["vinxi/types/client"]
+    "jsxImportSource": "solid-js"
   },
   "exclude": ["node_modules", "dist", "./dev"]
 }
