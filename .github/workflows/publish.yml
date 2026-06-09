@@ -3,47 +3,46 @@ on:
   release:
     types: [published]
   workflow_dispatch:
+
+permissions:
+  id-token: write  # Required for OIDC
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
+    # permissions:
+    #   contents: read
+    #   id-token: write
     steps:
       - uses: actions/checkout@v4
         with:
           ref: master
 
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        with:
-          run_install: false
+      # - uses: pnpm/action-setup@v4
+      #   name: Install pnpm
+      #   with:
+      #     run_install: false
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
-          node-version: '20'
-          cache-dependency-path: pnpm-lock.yaml
-          cache: 'pnpm'
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+          package-manager-cache: false  # never use caching in release builds
 
-      # Install dependencies with pnpm
-      - name: Install dependencies
-        run: pnpm install
+      - name: Install
+        run: npm ci
 
-      # Authenticate with npm using the NPM_TOKEN secret
-      - name: Authenticate to npm
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+      - name: Build
+        run: npm build
 
       # Check the version and publish the package
-      # - name: Publish package
-      #   run: pnpm publish --access public
       - name: create and publish versions
         uses: changesets/action@v1
         with:
-          version: pnpm version
+          version: npm run version
           commit: 'chore: update versions'
           title: 'chore: update versions'
-          publish: pnpm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          publish: npm publish
+
