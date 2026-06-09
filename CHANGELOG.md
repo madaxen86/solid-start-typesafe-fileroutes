@@ -1,5 +1,12 @@
 # solid-start-typesafe-routes-plugin
 
+## 1.2.3
+
+### Patch Changes
+
+- 4091c7f: added ignore for oxc and biome
+- f739ed3: pnpm 11 plus new action
+
 ## 1.2.0
 
 ### Minor Changes

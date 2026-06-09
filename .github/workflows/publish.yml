@@ -41,10 +41,10 @@ jobs:
       - name: create and publish versions
         uses: changesets/action@v1
         with:
-          version: pnpm version
+          version: pnpm version-package
           commit: 'chore: update versions'
           title: 'chore: update versions'
-          publish: pnpm publish
+          publish: pnpm run publish
         env:
           #NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
