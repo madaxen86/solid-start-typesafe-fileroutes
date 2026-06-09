@@ -19,10 +19,10 @@ jobs:
         with:
           ref: master
 
-      # - uses: pnpm/action-setup@v4
-      #   name: Install pnpm
-      #   with:
-      #     run_install: false
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          run_install: false
 
       - name: Set up Node.js
         uses: actions/setup-node@v6
@@ -32,17 +32,17 @@ jobs:
           package-manager-cache: false  # never use caching in release builds
 
       - name: Install
-        run: npm ci
+        run: pnpm ci
 
       - name: Build
-        run: npm build
+        run: pnpm build
 
       # Check the version and publish the package
       - name: create and publish versions
         uses: changesets/action@v1
         with:
-          version: npm run version
+          version: pnpm version
           commit: 'chore: update versions'
           title: 'chore: update versions'
-          publish: npm publish
+          publish: pnpm publish
 
